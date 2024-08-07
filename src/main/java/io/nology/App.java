@@ -12,6 +12,8 @@ public class App {
         newBoard.setRevealed(54);
 
         BoardPrinter.printCurrentBoard(newBoard);
+        BoardPrinter.printFullRevealedBoard(newBoard);
+
     }
 
 }

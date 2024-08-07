@@ -45,4 +45,29 @@ public class BoardPrinter {
             System.out.println(currentRow);
         }
     }
+
+    public static void printFullRevealedBoard(Board board) {
+        // print label row for columns
+        String header = "   ";
+        for (int i = 65; i < (board.width + 65); i++) {
+            header += (char) (i);
+            header += " ";
+        }
+        System.out.println(header);
+        // print each row
+        for (Integer i = 1; i <= board.width; i++) {
+            String currentRow = i.toString();
+            if (i < 10) {
+                currentRow += "  ";
+            } else {
+                currentRow += " ";
+            }
+            ;
+            for (int j = (0 + ((i - 1) * board.width)); j < (board.width * i); j++) {
+                currentRow += board.fullBoard[j];
+                currentRow += " ";
+            }
+            System.out.println(currentRow);
+        }
+    }
 }

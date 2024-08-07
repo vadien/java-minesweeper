@@ -21,18 +21,65 @@ public class Board {
         for (int j = 0; j < revealedBoard.length; j++) {
             revealedBoard[j] = "0";
         }
+
+        for (int i = 0; i < 10; i++) {
+            addBomb();
+        }
     }
 
     private void addBomb() {
-        int chosenSquare = (int) Math.floor(Math.random() * fullBoard.length);
-        if (fullBoard[chosenSquare] != 9) {
-            fullBoard[chosenSquare] = 9;
+        int chosenCell = (int) Math.floor(Math.random() * fullBoard.length);
+        if (fullBoard[chosenCell] == 9) {
+            return;
+        }
+        fullBoard[chosenCell] = 9;
+
+        // top row
+        int cellAbove = chosenCell - width;
+        if ((cellAbove > 0) && fullBoard[cellAbove] != 9) {
+            fullBoard[cellAbove] += 1;
         }
 
+        // bottom row
+        int cellBelow = chosenCell + width;
+        if ((cellBelow < fullBoard.length) && fullBoard[cellBelow] != 9) {
+            fullBoard[cellBelow] += 1;
+        }
+
+        // left column
+        int cellLeft = chosenCell - 1;
+        if ((chosenCell % width != 0) && fullBoard[cellLeft] != 9) {
+            fullBoard[cellLeft] += 1;
+        }
+
+        // right column
+        int cellRight = chosenCell + 1;
+        if ((chosenCell % width != 9) && fullBoard[cellRight] != 9) {
+            fullBoard[cellRight] += 1;
+        }
+
+        // cell above left
+        if (cellAbove > 0 && chosenCell % width != 0 && fullBoard[cellAbove - 1] != 9) {
+            fullBoard[cellAbove - 1] += 1;
+        }
+
+        // cell above right
+        if (cellAbove > 0 && chosenCell % width != 9 && fullBoard[cellAbove + 1] != 9) {
+            fullBoard[cellAbove + 1] += 1;
+        }
+
+        // cell below left
+        if (cellBelow < fullBoard.length && chosenCell % width != 0 && fullBoard[cellBelow - 1] != 9) {
+            fullBoard[cellBelow - 1] += 1;
+        }
+
+        // cell below right
+        if (cellBelow < fullBoard.length && chosenCell % width != 9 && fullBoard[cellBelow + 1] != 9) {
+            fullBoard[cellBelow + 1] += 1;
+        }
     }
 
     private void incrementSurrounding() {
-        // How do you find if a square's at the edge?
 
     }
 
