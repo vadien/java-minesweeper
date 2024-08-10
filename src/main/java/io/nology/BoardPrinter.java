@@ -37,6 +37,9 @@ public class BoardPrinter {
                 if (board.revealedBoard[j] == "0") {
                     currentRow += "X ";
 
+                } else if (board.revealedBoard[j] == "#") {
+                    currentRow += "# ";
+
                 } else {
                     currentRow += board.fullBoard[j];
                     currentRow += " ";
@@ -64,7 +67,13 @@ public class BoardPrinter {
             }
             ;
             for (int j = (0 + ((i - 1) * board.width)); j < (board.width * i); j++) {
-                currentRow += board.fullBoard[j];
+                if (board.fullBoard[j] == 0) {
+                    currentRow += " ";
+                } else if (board.fullBoard[j] == 9) {
+                    currentRow += "#";
+                } else {
+                    currentRow += board.fullBoard[j];
+                }
                 currentRow += " ";
             }
             System.out.println(currentRow);
