@@ -32,6 +32,10 @@ public class Game {
                 markCell(index);
             }
         }
+        if ("help".equals(lowerInput.toLowerCase().trim())) {
+            printHelp();
+        }
+
         if (lowerInput.length() == 1) {
             switch (lowerInput) {
                 case "s":
@@ -42,17 +46,12 @@ public class Game {
                     System.exit(0);
                     break;
                 case "h":
-                    if ("help".equals(input.toLowerCase().trim())) {
-                        printHelp();
-                    } else {
-                        printHelpShort();
-                    }
+                    printHelpShort();
                     if (minesRemaining > 0) {
                         gameLoop(newBoard);
                     } else {
                         startup();
                     }
-
                 default:
                     System.out.println("Unrecognised input, please try again.");
                     handleInput(inputScanner.next());
@@ -63,7 +62,8 @@ public class Game {
 
     public void beginGame() {
         System.out.println(
-                "Enter a width/height for your board between 1 and 25. This also determines the number of mines to find.");
+                "Enter a width for your board between 1 and 25. This also determines the number of mines to find.");
+        System.out.println("(Easy = 5, Medium = 10, Hard = 20)");
         int inputWidth = 0;
         while (inputWidth < 1 || inputWidth > 25) {
             inputWidth = inputScanner.nextInt();
@@ -103,11 +103,11 @@ public class Game {
         // able to brute force the game
         if (newBoard.fullBoard[index] == 9) {
             minesRemaining--;
-            System.out.printf("You disarmed a mine! %d remain.\n", minesRemaining);
+            System.out.printf("You disarmed a mine! %d remaining.\n", minesRemaining);
             newBoard.revealedBoard[index] = "#";
 
         } else {
-            System.out.printf("That wasn't a mine, so why are you blowing up? One of life's great mysteries.");
+            System.out.println("That wasn't a mine, so why are you blowing up? One of life's great mysteries.");
             gameOver();
         }
 
@@ -119,7 +119,7 @@ public class Game {
         System.out.println("To check a cell, enter the character 'C' followed by the cell you wish to check.");
         System.out.println("For example, 'CA4' or 'cb8'. All inputs are case insensitive.");
         System.out.println(
-                "To mark a cell that contains a mine, enter the character 'M' or 'B' before the cell to mark.");
+                "To mark a cell that contains a mine, enter the character 'M' or 'B' before the cell.");
         System.out.println("For example, 'Ba1'.");
         System.out.println("Successfully mark all mines to win the game!");
         gameLoop(newBoard);

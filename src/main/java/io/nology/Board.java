@@ -5,7 +5,7 @@ public class Board {
     String[] revealedBoard;
     int width;
     int minesRemaining;
-    // String[] winCondition; // match to revealedBoard to win
+    // String[] winCondition; // TODO: match to revealedBoard as victory
 
     public Board(int boardWidth) {
         System.out.println("Generating board...");
