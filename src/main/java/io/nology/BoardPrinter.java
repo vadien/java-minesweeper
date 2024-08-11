@@ -35,7 +35,7 @@ public class BoardPrinter {
             ;
             for (int j = (0 + ((i - 1) * board.width)); j < (board.width * i); j++) {
                 if (board.revealedBoard[j] == "0") {
-                    currentRow += "X ";
+                    currentRow += "  ";
 
                 } else if (board.revealedBoard[j] == "#") {
                     currentRow += "# ";

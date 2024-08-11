@@ -22,7 +22,6 @@ public class Game {
         String lowerInput = input.toLowerCase();
 
         if (minesRemaining > 0 && lowerInput.length() > 1) {
-            System.out.println("Making a move");
             Pattern inputPattern = Pattern.compile("^[mbc][a-z]\\d\\d?");
             Matcher matcher = inputPattern.matcher(lowerInput);
             if (matcher.matches() && lowerInput.charAt(0) == 'c') {
@@ -48,7 +47,12 @@ public class Game {
                     } else {
                         printHelpShort();
                     }
-                    break;
+                    if (minesRemaining > 0) {
+                        gameLoop(newBoard);
+                    } else {
+                        startup();
+                    }
+
                 default:
                     System.out.println("Unrecognised input, please try again.");
                     handleInput(inputScanner.next());
@@ -70,6 +74,7 @@ public class Game {
         newBoard = new Board(inputWidth);
         boardWidth = inputWidth;
         minesRemaining = boardWidth;
+        System.out.printf("There are %d mines to find.\n", minesRemaining);
         gameLoop(newBoard);
     }
 
@@ -82,9 +87,9 @@ public class Game {
     }
 
     public void checkCell(int index) {
-        System.out.printf("Cell %d checked!\n", index);
+        // System.out.printf("Cell %d checked!\n", index);
         if (newBoard.fullBoard[index] == 9) {
-            System.out.printf("Yep, that's a mine.");
+            System.out.println("Yep, that's a mine.");
             gameOver();
         }
         newBoard.revealedBoard[index] = "1";
@@ -94,7 +99,8 @@ public class Game {
     }
 
     public void markCell(int index) {
-        System.out.printf("Cell %d marked!\n", index);
+        // disarming mines rather than just marking prevents player from being
+        // able to brute force the game
         if (newBoard.fullBoard[index] == 9) {
             minesRemaining--;
             System.out.printf("You disarmed a mine! %d remain.\n", minesRemaining);
@@ -130,13 +136,31 @@ public class Game {
     }
 
     public void gameVictory() {
-        // verify if # positions match mine positions?
+        BoardPrinter.printCurrentBoard(newBoard);
+        System.out.println("Congratulations, you won!");
+        replayPrompt();
+    }
+
+    public void replayPrompt() {
+        System.out.println("Would you like to play again? (y/n)");
+        String input = inputScanner.next().toLowerCase();
+        switch (input) {
+            case "y":
+                startup();
+            case "n":
+                System.out.println("Thank you for playing!");
+                System.exit(0);
+            default:
+                System.out.println("Sorry, didn't quite catch that.");
+                replayPrompt();
+        }
     }
 
     public void gameOver() {
         System.out.println("BOOM!");
+        BoardPrinter.printCurrentBoard(newBoard);
         System.out.println("Game over :(");
-        startup();
+        replayPrompt();
     }
 
     public int getIndexFromCoordinate(String input) {

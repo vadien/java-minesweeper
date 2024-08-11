@@ -5,6 +5,7 @@ public class Board {
     String[] revealedBoard;
     int width;
     int minesRemaining;
+    // String[] winCondition; // match to revealedBoard to win
 
     public Board(int boardWidth) {
         System.out.println("Generating board...");
@@ -18,18 +19,19 @@ public class Board {
             revealedBoard[j] = "0";
         }
 
-        for (int i = 0; i < this.width; i++) {
-            addBomb();
+        while (minesRemaining < boardWidth) {
+            if (addBomb()) {
+                minesRemaining++;
+            }
         }
     }
 
-    private void addBomb() {
+    private boolean addBomb() {
         int chosenCell = (int) Math.floor(Math.random() * fullBoard.length);
         if (fullBoard[chosenCell] == 9) {
-            return;
+            return false;
         }
         fullBoard[chosenCell] = 9;
-        minesRemaining += 1;
 
         // top row
         int cellAbove = chosenCell - width;
@@ -74,6 +76,8 @@ public class Board {
         if (cellBelow < fullBoard.length && chosenCell % width != (width - 1) && fullBoard[cellBelow + 1] != 9) {
             fullBoard[cellBelow + 1] += 1;
         }
+
+        return true;
     }
 
     public void checkAdjacentCellsEmpty(int index) {
