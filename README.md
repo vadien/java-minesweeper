@@ -9,3 +9,7 @@
 - If the user selects a mine, the game will respond "boom!" and the game will be lost
 - If every non-mine square has been revealed, the game is won
 - Render the grid to the console after every user command
+
+## TODO:
+
+- Currently the game uses marking mines as a win condition (to prevent the player having to manually clear each cell one by one). I will update this to also allow and account for victory by revealing all non-mine squares.
