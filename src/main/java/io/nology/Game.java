@@ -122,7 +122,11 @@ public class Game {
                 "To mark a cell that contains a mine, enter the character 'M' or 'B' before the cell.");
         System.out.println("For example, 'Ba1'.");
         System.out.println("Successfully mark all mines to win the game!");
-        gameLoop(newBoard);
+        if (minesRemaining > 0) {
+            gameLoop(newBoard);
+        } else {
+            startup();
+        }
     }
 
     public void printHelpShort() {
@@ -132,7 +136,11 @@ public class Game {
         System.out.println("Enter the full word 'help' for detailed instructions.");
         System.out.println("X: exits the game");
         System.out.println("All inputs are case insensitive.");
-        gameLoop(newBoard);
+        if (minesRemaining > 0) {
+            gameLoop(newBoard);
+        } else {
+            startup();
+        }
     }
 
     public void gameVictory() {
